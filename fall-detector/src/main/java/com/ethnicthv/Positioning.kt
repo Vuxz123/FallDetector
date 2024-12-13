@@ -32,6 +32,8 @@ class Positioning private constructor(private val context: Guardian) : LocationL
             reset(0, 0f)
             once = System.currentTimeMillis()
             replied = false
+
+            Log.d("Positioning", "After Reset and sending message ${once} and ${replied}")
         }
     }
 
@@ -89,10 +91,10 @@ class Positioning private constructor(private val context: Guardian) : LocationL
             }
 
             Log.d("Positioning", "onLocationChanged pass permission check")
-            val deadline = once + 1000
+            val deadline = once
             val now = System.currentTimeMillis()
             Log.d("Positioning", "onLocationChanged ${deadline} <= ${now} && !${replied}")
-            if (!replied) {
+            if (deadline <= now && !replied) {
 
                 Log.d("Positioning", "onLocationChanged pass deadline check")
                 val battery = Battery.level(context)

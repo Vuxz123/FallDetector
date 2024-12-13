@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.ethnicthv"
-        minSdkVersion 21
+        minSdkVersion 22
         targetSdkVersion 30
         versionCode countCommits()
         versionName "0.0.0"

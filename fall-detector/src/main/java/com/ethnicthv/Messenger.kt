@@ -9,6 +9,7 @@ import android.os.Build
 import android.provider.Telephony
 import android.telephony.SmsManager
 import android.telephony.SmsMessage
+import android.telephony.SubscriptionManager
 import androidx.core.content.ContextCompat
 import java.util.Locale
 
@@ -74,8 +75,15 @@ class Messenger : BroadcastReceiver() {
                     Manifest.permission.SEND_SMS
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
+                Log.d(TAG, "Sending message: $message")
+
                 val manager = SmsManager.getDefault()
-                manager.sendTextMessage(contact, null, message, null, null)
+                try{
+                    manager.sendTextMessage(contact, null, message, null, null)
+                    Log.d(TAG, "Message sent successfully")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to send message: $e")
+                }
             } else {
                 Guardian.say(context, android.util.Log.ERROR, TAG, "ERROR: No permission to send an SMS")
             }
